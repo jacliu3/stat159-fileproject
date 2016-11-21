@@ -1,0 +1,55 @@
+# Read entire dataset
+data <- read.csv("../data/Most-Recent-Cohorts-All-Data-Elements.csv")
+
+# Extract data by category 
+earnings <- c("COUNT_NWNE_P10","COUNT_WNE_P10","MN_EARN_WNE_P10","MD_EARN_WNE_P10",
+    "PCT10_EARN_WNE_P10","PCT25_EARN_WNE_P10","PCT75_EARN_WNE_P10",
+    "PCT90_EARN_WNE_P10","SD_EARN_WNE_P10","COUNT_WNE_INC1_P10",
+    "COUNT_WNE_INC2_P10","COUNT_WNE_INC3_P10","COUNT_WNE_INDEP0_INC1_P10",
+    "COUNT_WNE_INDEP0_P10","COUNT_WNE_INDEP1_P10","COUNT_WNE_MALE0_P10",
+    "COUNT_WNE_MALE1_P10","GT_25K_P10","MN_EARN_WNE_INC1_P10","MN_EARN_WNE_INC2_P10",
+    "MN_EARN_WNE_INC3_P10","MN_EARN_WNE_INDEP0_INC1_P10","MN_EARN_WNE_INDEP0_P10",
+    "MN_EARN_WNE_INDEP1_P10","MN_EARN_WNE_MALE0_P10","MN_EARN_WNE_MALE1_P10",
+    "COUNT_NWNE_P6","COUNT_WNE_P6","MN_EARN_WNE_P6","MD_EARN_WNE_P6","PCT10_EARN_WNE_P6",
+    "PCT25_EARN_WNE_P6","PCT75_EARN_WNE_P6","PCT90_EARN_WNE_P6","SD_EARN_WNE_P6",
+    "COUNT_WNE_INC1_P6","COUNT_WNE_INC2_P6","COUNT_WNE_INC3_P6","COUNT_WNE_INDEP0_INC1_P6",
+    "COUNT_WNE_INDEP0_P6","COUNT_WNE_INDEP1_P6","COUNT_WNE_MALE0_P6","COUNT_WNE_MALE1_P6",
+    "GT_25K_P6","MN_EARN_WNE_INC1_P6","MN_EARN_WNE_INC2_P6","MN_EARN_WNE_INC3_P6",
+    "MN_EARN_WNE_INDEP0_INC1_P6","MN_EARN_WNE_INDEP0_P6","MN_EARN_WNE_INDEP1_P6",
+    "MN_EARN_WNE_MALE0_P6","MN_EARN_WNE_MALE1_P6","COUNT_NWNE_P7","COUNT_WNE_P7",
+    "MN_EARN_WNE_P7","SD_EARN_WNE_P7","GT_25K_P7","COUNT_NWNE_P8","COUNT_WNE_P8",
+    "MN_EARN_WNE_P8","MD_EARN_WNE_P8","PCT10_EARN_WNE_P8","PCT25_EARN_WNE_P8",
+    "PCT75_EARN_WNE_P8","PCT90_EARN_WNE_P8","SD_EARN_WNE_P8","GT_25K_P8",
+    "COUNT_NWNE_P9","COUNT_WNE_P9","MN_EARN_WNE_P9","SD_EARN_WNE_P9","GT_25K_P9")
+# will want to take ratio of 1868 and 1869 (count not working and working)
+# 1877 through 1884 (77-79, 80-82, 83-84) are also hard counts
+
+repayment <- c("CDR2", "CDR3","CDR2_DENOM", "CDR3_DENOM", "RPY_1YR_RT",
+               "COMPL_RPY_1YR_RT","NONCOM_RPY_1YR_RT","LO_INC_RPY_1YR_RT",
+               "MD_INC_RPY_1YR_RT","HI_INC_RPY_1YR_RT","DEP_RPY_1YR_RT",
+               "IND_RPY_1YR_RT","PELL_RPY_1YR_RT","NOPELL_RPY_1YR_RT",
+               "FEMALE_RPY_1YR_RT","MALE_RPY_1YR_RT","FIRSTGEN_RPY_1YR_RT",
+               "NOTFIRSTGEN_RPY_1YR_RT","RPY_3YR_RT","COMPL_RPY_3YR_RT",
+               "NONCOM_RPY_3YR_RT","LO_INC_RPY_3YR_RT","MD_INC_RPY_3YR_RT",
+               "HI_INC_RPY_3YR_RT","DEP_RPY_3YR_RT","IND_RPY_3YR_RT",
+               "PELL_RPY_3YR_RT","NOPELL_RPY_3YR_RT","FEMALE_RPY_3YR_RT",
+               "MALE_RPY_3YR_RT","FIRSTGEN_RPY_3YR_RT","NOTFIRSTGEN_RPY_3YR_RT",
+               "RPY_5YR_RT","COMPL_RPY_5YR_RT","NONCOM_RPY_5YR_RT",
+               "LO_INC_RPY_5YR_RT","MD_INC_RPY_5YR_RT","HI_INC_RPY_5YR_RT",
+               "DEP_RPY_5YR_RT","IND_RPY_5YR_RT","PELL_RPY_5YR_RT",
+               "NOPELL_RPY_5YR_RT","FEMALE_RPY_5YR_RT","MALE_RPY_5YR_RT",
+               "FIRSTGEN_RPY_5YR_RT","NOTFIRSTGEN_RPY_5YR_RT","RPY_7YR_RT",
+               "COMPL_RPY_7YR_RT","NONCOM_RPY_7YR_RT","LO_INC_RPY_7YR_RT",
+               "MD_INC_RPY_7YR_RT","HI_INC_RPY_7YR_RT","DEP_RPY_7YR_RT",
+               "IND_RPY_7YR_RT","PELL_RPY_7YR_RT","NOPELL_RPY_7YR_RT",
+               "FEMALE_RPY_7YR_RT","MALE_RPY_7YR_RT","FIRSTGEN_RPY_7YR_RT",
+               "NOTFIRSTGEN_RPY_7YR_RT")
+
+earnings.subset <- data[ , earnings]
+financial.subset <- data[ , c(395,438,1504:1537,1605,1709:1711)]
+repayment.subset <- data[ , repayment]
+
+# Save the data as their own csv files 
+write.csv(earnings.subset, file = "../data/earnings.csv", row.names = FALSE)
+write.csv(financial.subset, file = "../data/financial.csv", row.names = FALSE)
+write.csv(repayment.subset, file = "../data/repayment.csv", row.names = FALSE)
