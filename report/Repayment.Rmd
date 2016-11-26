@@ -1,0 +1,46 @@
+---
+title: "Stats 159 Final Project Report"
+author: "Zhongling Jiang"
+date: "November 26, 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Cleaning and Processing 
+There are three types of missing data in the dataset: NA, NULL and PrivacySuppressed. These values account for measurable percentage of the dataset, so it is not appropriate to simply remove them. A proportion of NULL values are meaningful as they indicate the absence of binary variables, or numerical zero. In order to use these data, we replace NULL values by zero. Meanwhile we replace PrivacySuppressed value by NA.
+
+However, there is still a large percentage of NA present. To solve this problem, we implemented predictive mean matching (pmm) imputing method, which involves training a regression model using other fully observed variables, to predict missing values.
+
+
+## Repayment 
+
+One objective of our model is to identify the key indicator of borrowing risk. In repayment section, we observe that there are several important predictors: one- and three-year Cohort Default Rate (CDR), and 1,3,5,7-year Repayment Rate (RPY_YR_RT). There are also data on repayment rate split on different categories e.g. degree completor v.s non-completor, income low v.s medium v.s high, etc. 
+
+
+We first look at Repaymen Rate in different categories of students. Below is the boxplot of one-year repayment rate with regard to categories. It shows the facts that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
+
+```{r fig.width=3, fig.height=30,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("../images/one-year-repayment-by-categories.png")
+grid.raster(img)
+```
+
+There is also high correlations between default rate and repayment rate. The following is the correlation matrix among 1,3 year CDR and 1,3,5,7 year RPY_RT
+
+```{r comment='',echo =FALSE}
+cat(readLines('../data/CDR_repayment_correlation.txt'), sep = '\n')
+```
+
+And the correlation plot: 
+
+```{r fig.width=3, fig.height=30,echo=FALSE}
+img <- readPNG("../images/CDR_repayment_correlation.png")
+grid.raster(img)
+```
+
+Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly, it captures the debt conditon of students in a certain college because students who default on loan is either buried in debt or unable to make enough earnings after graduate. Secondly, it is highly correlated with repayment variables, which measure borrowers ability's pay back the loan. We only need to focus on one of them. We believe CDR3 is an important risk factor that credit instituion needs to consider before they borrow. 
+
