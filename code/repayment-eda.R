@@ -1,5 +1,6 @@
 repayment <- read.csv(file = '../data/repayment.csv', header = TRUE, na.strings = c("NULL","PrivacySuppressed"), stringsAsFactors = FALSE)
 
+#Observe the relationship between repayment rate and each category 
 repayment.oneyear = subset(repayment, select= RPY_1YR_RT:NOTFIRSTGEN_RPY_1YR_RT)
 png('../images/one-year-repayment-by-categories.png')
 par(mar = c(12, 3.1, 0.1, 1.5))
@@ -18,7 +19,7 @@ print(tbl.completors)
 cat('\n\n Pell grant v.s Non pell grant')
 print(tbl.pellgrant)
 sink()
-# Both of them are suginificant
+# Both of them are significant
 
 repayment.threeyear = subset(repayment, select= RPY_3YR_RT:NOTFIRSTGEN_RPY_3YR_RT)
 png('../images/three-year-repayment-by-categories.png')
@@ -27,3 +28,17 @@ par(cex= 0.55)
 boxplot(repayment.threeyear, las=2)
 dev.off()
 # three year repayment plot displays the similar result 
+
+### The correlation between Cohort Default Rate and Repayment Rate
+attach(repayment)
+mat <- data.frame(CDR2, CDR3, RPY_1YR_RT, RPY_3YR_RT, RPY_5YR_RT, RPY_7YR_RT)
+sink('../data/CDR_repayment_correlation.txt')
+M <- cor(mat, use= "complete")
+print(M)
+sink()
+library(corrplot)
+png('../images/CDR_repayment_correlation.png')
+corrplot(M, method="circle")
+dev.off()
+# The correlation matrix shows that all six variables are highly correlated,
+# so we could pick one of them as our predictors 
