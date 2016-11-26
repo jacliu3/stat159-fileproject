@@ -64,3 +64,6 @@ plot(prune.repayment.threeyear )
 text(prune.repayment.threeyear, pretty =0)
 dev.off()
 
+
+#next, find out correlation between default rate and repayment rate
+#plot histograms with repayment rate against each category
