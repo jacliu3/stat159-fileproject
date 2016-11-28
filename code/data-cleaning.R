@@ -1,17 +1,22 @@
-#Part of our data cleaning process involves dealing with NA values. There are three types
-#of NA value in this dataset: NULL and 'PrivacySuppressed' and actual NA's. So I suggest when we are
-#loading dataset, we could add 'na.string ="PrivacySuppressed', turning 
-#PrivacySuppressed into NA's. And then turn NULL values into 0.
+library(mice)
+earnings.data <- read.csv("../data/earnings.csv", stringsAsFactors = FALSE,
+                          na.strings = "PrivacySuppressed")
+financial.data <- read.csv("../data/financial.csv", stringsAsFactors = FALSE,
+                           na.strings = "PrivacySuppressed")
 
-# We claim here that for those features that contain over 10 (or 20) percent of NA values,
-# they should be discarded. 
+comb.data <- cbind(earnings.data, financial.data)
 
-#Example: Repayment Data
+# Replace NULL values with 0
+comb.data[which(comb.data == "NULL", arr.ind = TRUE)] <- 0
 
-#define functions that calculate the proportion of NA's in a feature
-pMiss <- function(x){sum(is.na(x))/length(x)*100} 
-repayment <- read.csv(file = '../data/repayment.csv', header = TRUE, na.strings = "PrivacySuppressed", stringsAsFactors = FALSE)
-repayment[which(repayment== "NULL", arr.ind=TRUE)] <- 0
-vars.na <- apply(repayment,2,pMiss)
-repayment.clean <- repayment[,-which(vars.na > 25)] # if we set 25 percent NA rate as boundary
+# Remove samples and columns with over 30% NA values 
+# We remove columns first to preserve the rows
+comb.data <- comb.data[ , -which(colMeans(is.na(comb.data)) > 0.3)]
+comb.data <- comb.data[-which(rowMeans(is.na(comb.data)) > 0.3), ]
+
+# Impute missing values -- takes awhile
+imp.data <- kNN(comb.data)
+save(imp.data, file = "../data/imputed.Rdata")
+
+# Feature selection 
 
