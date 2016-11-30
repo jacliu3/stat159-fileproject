@@ -1,0 +1,40 @@
+##Results
+
+After performing 10-fold cross-validation on all regression methods, the tuning parameters were chosen on the models with the smallest MSE. Ridge regression had a shrinkage paramater of $`r ridge.best.lambda`$, while lasso used $`r lasso.best.lambda`$. In principal components analysis, the best number of components was `r pcr.best.ncomp`, while in partial least square regression, it was `r plsr.best.ncomp`. After the models, with these optimal parameters, were fitted on the entire dataset, the coefficients in Table 1 were calculated. 
+```{r, results='asis'}
+coeffs <- data.frame(ols.fit$coefficients)
+coeffs <- transform(merge(coeffs, as.matrix(ridge.fit$beta), by = 0, all = TRUE),
+                    row.names = Row.names, Row.names = NULL)
+coeffs <- transform(merge(coeffs, as.matrix(lasso.fit$beta), by = 0, all = TRUE),
+                    row.names = Row.names, Row.names = NULL)
+coeffs <- transform(merge(coeffs, pcr.fit$coefficients[ , , pcr.best.ncomp],
+                          by = 0, all = TRUE),
+                    row.names = Row.names, Row.names = NULL)
+coeffs <- transform(merge(coeffs, plsr.fit$coefficients[ , , plsr.best.ncomp],
+                          by = 0, all = TRUE),
+                    row.names = Row.names, Row.names = NULL)
+names(coeffs) <- c("ols", "ridge", "lasso", "pcr", "plsr")
+xtable(coeffs, caption = "Coefficients of all regression models", digits = 4)
+```
+
+Just looking at the raw numbers, the coefficients look very similar; a majority are the same or don't differ until the fourth decimal place. This is also seen in the Figure 7.
+
+```{r, fig.cap = "Coefficients by Regression Method"}
+temp <- coeffs
+temp$index <- 1:nrow(coeffs)
+temp <- melt(temp, id = "index")
+names(temp) <- c("index", "method", "value")
+ggplot(data = temp, aes(x = index, y = value, colour = method)) + 
+       geom_point() + geom_line() + xlab("Coefficients")
+```
+
+
+To compare the models, the mean-squared error for each are displayed in Table 2.
+```{r, results = 'asis'}
+error.table <- data.frame(MSE=c(mean(ols.sum$residuals^2), ridge.error,
+                                lasso.error, pcr.error, plsr.error))
+rownames(error.table) <- c("ols", "ridge", "lasso", "pcr", "plsr")
+xtable(error.table, digits = 4, caption = "Mean-squared error of all regression models")
+```
+
+---

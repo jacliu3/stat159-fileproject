@@ -1,0 +1,5 @@
+##Abstract
+
+This paper will go through several different types of linear regression models that are good alternatives to the standard simple linear model $y = Ax + b$. The different regression models utilizes different fitting methods, as oppose to using Ordinary Least Squares (OLS) in the simple and multiple linear regression. A similar explanation can be found in Chapter 6, _Linear Model Selection and Regularization_, of the book [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/) by James et al. After reading, one can easily follow the same steps and achieve the same results. However, our analysis will be slightly different due to our methods of preprocessing (see _Data_ section).
+
+---

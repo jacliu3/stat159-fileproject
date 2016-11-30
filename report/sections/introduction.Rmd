@@ -1,0 +1,12 @@
+##Introduction
+
+Previous we have explored different types of linear regression models, but all were utilizing Ordinary Least Squares method to fit the model. Now we want to try and see whether other fitting methods and models will give us better predictions. We will consider the following regression methods:
+
+- Ridge Regression (RR)
+- Lasso Regression (LR)
+- Principal Components Regression (PCR)
+- Partial Least Squares Regression (PLSR)
+
+We will perform analysis on the data set [Credit](http://www-bcf.usc.edu/~gareth/ISL/Credit.csv). In each analysis, we will tune the parameter(s) for each respective model with 10 fold cross-validation and then evaluate the best models by using Minimum Square Errors (MSE) as our loss function on the test set. A more detailed explaination on the models is proved in the _Methods_ section.
+
+---
