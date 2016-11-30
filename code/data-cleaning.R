@@ -29,6 +29,6 @@ features <- c("COUNT_NWNE_P10", "MN_EARN_WNE_P10", "COUNT_WNE_INDEP0_P10",
 
 # Save relevant features/data
 imp.data <- imp.data[, features]
+repayment.data <- repayment.data[, "CDR3"]
 save(imp.data, file = "../data/imputed.Rdata")
 save(repayment.data, file="../data/repayment.Rdata")
-
