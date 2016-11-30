@@ -21,7 +21,14 @@ repayment.data <- repayment.data[-removedRows, ]
 
 # Impute missing values -- takes awhile
 imp.data <- kNN(comb.data, imp_var = FALSE)
+
+# Feature selection 
+features <- c("COUNT_NWNE_P10", "MN_EARN_WNE_P10", "COUNT_WNE_INDEP0_P10",
+             "COUNT_WNE_INDEP0_INC1_P10", "D150_4_POOLED", "PCTFLOAN", "DEBT_MDN",
+             "DEBT_N", "DEP_DEBT_N", "LOAN_EVER")
+
+# Save relevant features/data
+imp.data <- imp.data[, features]
 save(imp.data, file = "../data/imputed.Rdata")
 save(repayment.data, file="../data/repayment.Rdata")
-# Feature selection 
-features = c("COUNT_NWNE_P10","MN_EARN_WNE_P10","COUNT_WNE_INDEP0_P10","COUNT_WNE_INDEP0_INC1_P10","D150_4_POOLED","PCTFLOAN","DEBT_MDN","DEBT_N","DEP_DEBT_N","LOAN_EVER")
+
