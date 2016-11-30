@@ -1,0 +1,27 @@
+completors v.s. non-completors 
+
+	Welch Two Sample t-test
+
+data:  repayment.oneyear["COMPL_RPY_1YR_RT"] and repayment.oneyear["NONCOM_RPY_1YR_RT"]
+t = 52.248, df = 15386, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.1343493 0.1448227
+sample estimates:
+mean of x mean of y 
+0.7257711 0.5861851 
+
+
+
+ Pell grant v.s Non pell grant
+	Welch Two Sample t-test
+
+data:  repayment.oneyear["PELL_RPY_1YR_RT"] and repayment.oneyear["NOPELL_RPY_1YR_RT"]
+t = -53.85, df = 14425, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.1368166 -0.1272063
+sample estimates:
+mean of x mean of y 
+0.6162817 0.7482931 
+
