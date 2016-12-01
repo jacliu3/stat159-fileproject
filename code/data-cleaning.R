@@ -1,5 +1,6 @@
 library(mice)
 library(VIM)
+library(corrplot)
 earnings.data <- read.csv("../data/earnings.csv", stringsAsFactors = FALSE,
                           na.strings = "PrivacySuppressed")
 financial.data <- read.csv("../data/financial.csv", stringsAsFactors = FALSE,
@@ -21,14 +22,26 @@ repayment.data <- repayment.data[-removedRows, ]
 
 # Impute missing values -- takes awhile
 imp.data <- kNN(comb.data, imp_var = FALSE)
-
-# Feature selection 
-features <- c("COUNT_NWNE_P10", "MN_EARN_WNE_P10", "COUNT_WNE_INDEP0_P10",
-             "COUNT_WNE_INDEP0_INC1_P10", "D150_4_POOLED", "PCTFLOAN", "DEBT_MDN",
-             "DEBT_N", "DEP_DEBT_N", "LOAN_EVER")
-
-# Save relevant features/data
-imp.data <- imp.data[, features]
-repayment.data <- repayment.data[, "CDR3"]
 save(imp.data, file = "../data/imputed.Rdata")
 save(repayment.data, file="../data/repayment.Rdata")
+
+# Feature selection 
+png(height=1000, width=1000, file="../images/repayment_correlation.png")
+repayment.data <- data.frame(as.matrix(sapply(repayment.data, as.numeric)))
+repayment.cor = cor(repayment.data, use="complete.obs")
+corrplot(repayment.cor, tl.cex=0.5, type="lower")
+dev.off()
+
+png(height=1000, width=1000, file="../images/financial_correlation.png")
+financial.data <- data.frame(as.matrix(sapply(financial.data, as.numeric)))
+financial.cor = cor(financial.data, use="complete.obs")
+corrplot(financial.cor, tl.cex=0.5, type="lower")
+dev.off()
+
+png(height=1000, width=1000, file="../images/earning_correlation.png")
+earnings.data <- data.frame(as.matrix(sapply(earnings.data, as.numeric)))
+earnings.cor = cor(earnings.data, use="complete.obs")
+corrplot(earnings.cor, tl.cex=0.5, type="lower")
+dev.off()
+
+features = c("COUNT_NWNE_P10","MN_EARN_WNE_P10","COUNT_WNE_INDEP0_P10","COUNT_WNE_INDEP0_INC1_P10","D150_4_POOLED","PCTFLOAN","DEBT_MDN","DEBT_N","DEP_DEBT_N","LOAN_EVER")
