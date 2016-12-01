@@ -1,35 +1,18 @@
+---
+output: pdf_document
+---
+##https://ifap.ed.gov/DefaultManagement/guide/attachments/CDRGuideCh2Pt4CDREffects.pdf
+##http://www.finaid.org/loans/cohortdefaultrates.phtml
+
 ##Data
 
-The primary data set we are using is [Credit](http://www-bcf.usc.edu/~gareth/ISL/Credit.csv), which contains 400 bank customers and their personal information. _Balance_, which states the current balance of the customer, is used as an dependent variable and the rest are used as predictor variables (or features) for our models. They consist of:
+The primary data set we are using is the most recent College ScoreCard (https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv), which contains approximately 2000 metrics for 7704 degree-granting institution across U.S. These metrics include demographic data, student academics, costs, student body, financial aid, completion, repayment information, etc. We choose to focus on the most recent year dataset because it contains most up-to-date information. Among all metrics we will select predictors from following three clusters:
 
-- _Income_: a quantitative variable stating customer's income
-- _Limit_: a quantitative variable stating customer's credit limit
-- _Rating_: a quantitative variable stating customer's credit rating
-- _Cards_: a quantitative variable stating the number of cards that the customer has
-- _Age_: a quantitative variable stating customer's age
-- _Education_: a quantitative variable stating the number of years of education of the customer
-- _Gender_: a qualitative variable stating customer's gender
-- _Student_: a qualitative variable stating whether the customer is currently a student
-- _Married_: a qualitative variable stating the customer's marital status
-- _Ethnicity_: a qualitative variable stating customer's ethnicity
+_Repayment_: shows loan performance metrics and borrowers' behavior afgter graduation 
+_Financial Aid_: Amount of debt that students can expect to borrow
+_Earnings_: data on earnings and employment of former students
 
-We'll pick the best models with optimal parameters in predicting _Balance_ using the above variables.
-
-Before we get into the regression methods used, let's do a preliminary analysis on the correlations between the quantitative variables.
-
-Based on the correlation visualization in Figure 1, we can see that _Income_, _Limit_, and _Rating_ have strong correlations with each other. This might present a problem when we use these variables during linear regression, but they also have a strong correlation with _Balance_, suggesting these variables will be important for our predictions. On the other hand, we see there is little correlation between _Balance_ and _Cards_, _Age_, and _Education_, so we expect these to have a smaller weight in our final models. We can demonstrate the same relationships with the following scatterplot matrix as well (see Figure 2).
-
-###Preprocessing
-Our regression models require qualitative variables, so to include the quantitative columns, we binarized the values. For instance, the `Student` column takes on two values (_Yes_ or _No_), so we created a binary column called `StudentYes` that takes on the value 1 if the customer is a student, and 0 otherwise. This was done via the `model.matrix` function in R. Because the features are all measured in different units, we also mean-center and standarize the columns so larger values aren't given undue weight in the regression coefficients.
-
-```{r, fig.height = 5, fig.align = 'center', fig.cap = "Correlation Matrix"}
-correlation.matrix <- readPNG("../../images/correlation-matrix.png")
-grid.raster(correlation.matrix)
-```
-
-```{r, fig.height = 8, fig.align = 'center', fig.cap = "Scatterplot Matrix"}
-scatterplot.matrix <- readPNG("../../images/scatterplot-matrix.png")
-grid.raster(scatterplot.matrix)
-```
+Our first task is to clean the dataset, select the right variable to predict, and most relevant predictors by transforming and segementing the dataset.
 
 ---
+

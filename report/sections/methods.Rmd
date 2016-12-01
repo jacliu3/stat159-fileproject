@@ -1,45 +1,43 @@
 ##Methods
 
-###Ordinary Least Square (OLS)
-Previous, we have predominantly used OLS to estimate the coefficients for a linear model, and the goal is to find the set of coefficients that will minimize the sum of the squares of the predicted values and the actual values of the dependent variable. The formula we want to minimize can be express as follows:
+###Preprocessing
 
-$$\sum_{i = 1}^{n}(y_{i} - \beta_{0} - \sum_{j = 1}^{p}\beta_{j}x_{ij})^{2}$$
+## Handling missing values 
 
-Since this method is fundamental and unbiased, we will use this model as a benchmark to evaluate the other methods.
+There are three types of missing data in the dataset: NA, NULL and PrivacySuppressed. These values account for measurable percentage of the dataset, so it is not appropriate to simply remove them. A proportion of NULL values are meaningful as they indicate the absence of binary variables, or numerical zero. In order to use these data, we replace NULL values (except those in CDR3 column) by zero. Meanwhile we replace PrivacySuppressed value by NA, and later we will impute these values.
 
-###Shrinkage Methods
+We remove the variables that contains over 30 percent of NAs, and then remove entries that contains 30 percent of NAs. That leaves about ( ) observations. Then we want to impute the rest of NA values through k nearest neighbors (KNN) with R package 'VIM'. Therefore, we prepare a full dataset for modeling. 
 
-Shrinkage methods are used to mainly constrain the coefficients estimates of the model to prevent overfitting. By penalizing larger coefficients, the resulting model has a smaller coefficients and thuslower variance in predictions. As a consequence, however, the bias of the model increases so it is important to choose the shrinkage parameter carefully, usually through cross-validation. We will use _Ridge Regression_ and _Lasso Regression_ to see whether shrinkage will help improve our predictions.
+## Select the predicting variable
 
-####Ridge Regression (RR)
+One objective of our model is to identify the key indicator of borrowing risk. In repayment section, we observe that there are several important predictors: one- and three-year Cohort Default Rate (CDR), and 1,3,5,7-year Repayment Rate (RPY_YR_RT). There are also data on repayment rate split on different categories e.g. degree completor v.s non-completor, income low v.s medium v.s high, etc. 
 
-Ridge regression is an example of shrinkage method applied to least squares regression. The formula we want to minimize can be express as follows:
 
-$$\sum_{i = 1}^{n}(y_{i} - \beta_{0} - \sum_{j = 1}^{p}\beta_{j}x_{ij})^{2} + \lambda \sum_{j=1}^p \beta_j^2$$
+We first look at Repaymen Rate in different categories of students. Below is the boxplot of one-year repayment rate with regard to categories. It shows the facts that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
 
-where $\lambda$ is a positive parameter controlling the effect of shrinkage. Higher value means there is a higher penalty for large coefficients and vice versa. For example, when $\lambda$ = 0, there is no penalty on the coefficients, therefore it is regular OLS. As $\lambda$ increases, the coefficients get closer to 0. Since it is a parameter, we will use cross-validation to tune an optimal value for $\lambda$.
+```{r fig.width=3, fig.height=30,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("../../images/one-year-repayment-by-categories.png")
+grid.raster(img)
+```
 
-####Lasso Regression (LR)
+There is also high correlations between default rate and repayment rate. The following is the correlation matrix among 1,3 year CDR and 1,3,5,7 year RPY_RT
 
-Lasso Regression is another shrinkage method in least square regression. It can be expressed as:
-$$\sum_{i = 1}^{n}(y_{i} - \beta_{0} - \sum_{j = 1}^{p}\beta_{j}x_{ij})^{2} + \lambda \sum_{j=1}^p |\beta_j|$$
+```{r comment='',echo =FALSE}
+cat(readLines('../../data/CDR_repayment_correlation.txt'), sep = '\n')
+```
 
-$\lambda$ has the same effect here as it does in ridge regression, penalizing larger coefficients to produce smaller values. However, unlike ridge, lasso encourages feature selection; the shape of the constraint regions tend to produce coefficients that are exactly zero. To learn more, read Chapter 6, Section 2.2 _The Lasso_ in the _Introduction to Statistical Learning_ book. 
+And the correlation plot: 
 
-###Dimension Reduction Methods
+```{r fig.width=3, fig.height=30,echo=FALSE}
+img <- readPNG("../../images/CDR_repayment_correlation.png")
+grid.raster(img)
+```
 
-Dimension Reduction method uses OLS to fit the coefficients. However, instead of using the original predictors, it will first create a new vector of predictors from linear combinations of the original predictors. The purpose is to reduces the number of variables we are using as predictors in our regression, lowering the chance of overfitting and speeding up the computation of our models. There are a number of different ways to achieve dimensionality reduction, and here we will discuss _Principal Components Regression_ and _Partial Least Squares Regression_. 
+Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly, it captures the debt conditon of students in a certain college because students who default on loan is either buried in debt or unable to make enough earnings after graduate. Secondly, it is highly correlated with repayment variables, which measure borrowers ability's pay back the loan. We only need to focus on one of them. We believe CDR3 is an important risk factor that credit instituion needs to consider before they borrow. 
 
-####Principal Components Regression (PCR)
+#Select predictors 
 
-Principal Components Regression uses Principal Components Analysis (PCA) as a _unsupervised_ dimension reduction step prior to linear regression. Benefits of using PCA include being able to identify structures and relations, reducing the chance of overfit, and lowering dimensions. PCA transforms a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called _principal components_. The first principal component tries to account for as much variability in the data as possible, and all subsequent principal components have the highest variance possible given the constraint that they must be orthongonal to the preceding components. As a result, PCA produces a new set of predictors with size _less than or equal_ to the original set, denoted as variable _M_, meaning that a smaller amount of predictors is enough to explain most of the variation in the data.
-
-With lower dimension, we can lower the risk of overfitting our model. Since _M_ will be the parameter of PCR, we will again use cross-validation to tune an optimal value for _M_. 
-
-####Partial Least Square Regression (PLSR)
-
-Like all dimensionality reduction methods, the benefits of PLSR include reducing the chance of overfitting and lowering the dimensionality of the dataset. Unlike PCR, however, it is a _supervised_ learning method and uses that additional information to its advantage. Instead of choosing vectors that capture the most variablity in the features, it choose vectors that capture the most variability in both the features AND the response variable. The first PLS direction is chosen simply by taking the coefficients from simple linear regression, which are proportional to the correlations between the features and the response variable. The second PLS direction is then found by another linear re gression, this time on the residuals of the features regressed on the first direction.
-
-PLSR is very useful when the features are highly collinear or when there are more features than observations. Its weight matrix reflects the covariance between the features and the response variables, while the weight matrix of PCA reflects the covariance between features themselves. 
-
+After removing the We narrow our focus down to 
 ---
