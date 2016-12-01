@@ -1,4 +1,5 @@
 library (caret)
+set.seed(1)
 load("../data/imputed.Rdata")
 load("../data/repayment.Rdata")
 features <- c("COUNT_NWNE_P10","MN_EARN_WNE_P10","COUNT_WNE_INDEP0_P10","COUNT_WNE_INDEP0_INC1_P10","D150_4_POOLED","PCTFLOAN","DEBT_MDN","DEBT_N","DEP_DEBT_N","LOAN_EVER")
