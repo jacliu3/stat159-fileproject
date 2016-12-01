@@ -50,6 +50,10 @@ summary(best.gbm, las = 1)
 dev.off()
 par <- og
 
-pred6 <- predict(fit6, x[-train.indices, ])
 png(file = "../images/gbm-predictions.png")
-plot(pred, x[-train.indices, "CDR"])
+plot(pred, x[-train.indices, "CDR"],
+     ylab = "observed", xlab = "predicted") + abline(a = 0, b = 1, col = "blue") 
+
+dev.off()
+
+
