@@ -12,36 +12,38 @@ train.indices <- sample(nrow(x), as.integer(nrow(x)*4/5))
 fit1 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian",
             cv.folds = 3, n.trees = 100)
 fit2 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, n.trees = 75)
-fit3 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, n.trees = 150)
-fit4 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
             cv.folds = 3, shrinkage = 0.01)
-fit5 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+fit3 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
             cv.folds = 3, shrinkage = 0.001)
-fit6 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+fit4 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
             cv.folds = 3, shrinkage = 0.1)
-fit7 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+fit5 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
             cv.folds = 3, shrinkage = 0.1, bag.fraction = 0.4)
-fit8 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+fit6 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
             cv.folds = 3, shrinkage = 0.1, bag.fraction = 0.6)
-fits <- list(fit1, fit2, fit3, fit4, fit5, fit6, fit7, fit8)
+fit7 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+            cv.folds = 3, shrinkage = 0.1, n.trees = 150)
+fit8 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+            cv.folds = 3, shrinkage = 0.1, n.trees = 75)
+fit9 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+            cv.folds = 3, shrinkage = 0.1, n.trees = 300)
+fit10 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+            cv.folds = 3, shrinkage = 0.1, n.trees = 500)
+fit11 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
+             cv.folds = 3, shrinkage = 0.1, n.trees = 1000)
+fits <- list(fit1, fit2, fit3, fit4, fit5, fit6, fit7, fit8, fit9, fit10, fit11)
 
 # Select best model
-best.gbm <- fit1
-for (fit in fits){
-  if (mean(fit$cv.error - best.gbm$cv.error) < 0){
-    best.gbm <- fit
-  }
-}
+avg.error <- sapply(fits, function(x) {mean(abs(x$cv.error))})
+best.gbm <- fits[[which.min(avg.error)]]
   
-# Calculate validation error 
+# Calculate validation error using mean absolute error
 pred <- predict(best.gbm, x[-train.indices, ])
-gbm.mse <- mean((pred - x[-train.indices, 'CDR'])^2)
-rel.gbm.mse <- gbm.mse / mean(x[-train.indices, 'CDR']) * 100
+gbm.abse <- mean(abs(pred - x[-train.indices, 'CDR']))
+rel.gbm.abse <- gbm.abse / mean(x[-train.indices, 'CDR']) * 100
 
 # Save results (data and visuals)
-save(best.gbm, gbm.mse, rel.gbm.mse, file = "../data/fitted-gbm.Rdata")
+save(best.gbm, gbm.abse, rel.gbm.abse, file = "../data/fitted-gbm.Rdata")
 
 og <- par()
 par(mar = c(6, 10, 2, 2), cex.axis = 0.75)
@@ -53,7 +55,4 @@ par <- og
 png(file = "../images/gbm-predictions.png")
 plot(pred, x[-train.indices, "CDR"],
      ylab = "observed", xlab = "predicted") + abline(a = 0, b = 1, col = "blue") 
-
 dev.off()
-
-
