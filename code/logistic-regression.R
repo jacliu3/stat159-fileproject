@@ -3,11 +3,10 @@ set.seed(1)
 load("../data/imputed.Rdata")
 load("../data/repayment.Rdata")
 features <- c("COUNT_NWNE_P10","MN_EARN_WNE_P10","COUNT_WNE_INDEP0_P10","COUNT_WNE_INDEP0_INC1_P10","D150_4_POOLED","PCTFLOAN","DEBT_MDN","DEBT_N","DEP_DEBT_N","LOAN_EVER")
-model.label <- repayment.data["CDR3"]
-model.variables <- imp.data[features]
+label <- as.numeric(repayment.data)
+model.variables <- data.frame(as.matrix(sapply(imp.data[features], as.numeric)))
+comb.data <- cbind(label, model.variables)
 
-comb.data <- cbind(model.label, model.variables)
-comb.data <- data.frame(as.matrix(sapply(comb.data, as.numeric)))
 #University with CDR3 higher than 15% is classified as high risk
 comb.data[,1] <- ifelse(comb.data[,1] > 0.15, 1, 0)
 
