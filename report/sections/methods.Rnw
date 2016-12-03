@@ -1,5 +1,5 @@
 \section{Methods}
-
+\subsection{Logistic Regression}
 \begin{document}
 $ \textit{Logistic regression} $ is one of the most commonly used tools for applied statistics
 and discrete data analysis. In this model, we have a binary output variable Y, and we want to model the conditional probability  
