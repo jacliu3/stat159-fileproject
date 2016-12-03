@@ -1,3 +1,6 @@
+---
+output: pdf_document
+---
 ##Methods
 
 ###Preprocessing
@@ -13,7 +16,7 @@ We remove the variables that contains over 30 percent of NAs, and then remove en
 One objective of our model is to identify the key indicator of borrowing risk. In repayment section, we observe that there are several important predictors: one- and three-year Cohort Default Rate (CDR), and 1,3,5,7-year Repayment Rate (RPY_YR_RT). There are also data on repayment rate split on different categories e.g. degree completor v.s non-completor, income low v.s medium v.s high, etc. 
 
 
-We first look at Repaymen Rate in different categories of students. Below is the boxplot of one-year repayment rate with regard to categories. It shows the facts that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
+We first look at Repayment Rate in different categories of students. Below is the boxplot of one-year repayment rate with regard to categories. It shows the facts that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
 
 ```{r fig.width=3, fig.height=30,echo=FALSE}
 library(png)
@@ -39,5 +42,20 @@ Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly,
 
 #Select predictors 
 
-After removing the We narrow our focus down to 
+After removing unrelavant features, we narrow our focus down to the Earning section and Financial Aid Section. We observe the correlation plot. For earning section:
+
+```{r fig.width=3, fig.height=30,echo=FALSE}
+img <- readPNG("../../images/earning_correlation.png")
+grid.raster(img)
+```
+
+For financial aid section:
+
+```{r fig.width=3, fig.height=30,echo=FALSE}
+img <- readPNG("../../images/financial_correlation.png")
+grid.raster(img)
+```
+
+Based on the correlation plot, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset that is of size (), with predictors being: .. and predicting variable being CDR3.
+
 ---

@@ -1,12 +1,10 @@
 ##Introduction
 
-Previous we have explored different types of linear regression models, but all were utilizing Ordinary Least Squares method to fit the model. Now we want to try and see whether other fitting methods and models will give us better predictions. We will consider the following regression methods:
+We hope to create data models that can make predictions regarding the loan cohort default rate (CDR) based on factors that represents students' earnings and financial aid. In order to better inform loan decision, we classify all institutions into high-risk (CDR3 > 0.15)and low-risk (CDR < 0.15) two categories. Our prediction will also tell which category an institution will fall in given some specific metrics. There are two types of model we use to fit the data: 
 
-- Ridge Regression (RR)
-- Lasso Regression (LR)
-- Principal Components Regression (PCR)
-- Partial Least Squares Regression (PLSR)
+-Logistic Regression
+-Gradient Boosting Machine
 
-We will perform analysis on the data set [Credit](http://www-bcf.usc.edu/~gareth/ISL/Credit.csv). In each analysis, we will tune the parameter(s) for each respective model with 10 fold cross-validation and then evaluate the best models by using Minimum Square Errors (MSE) as our loss function on the test set. A more detailed explaination on the models is proved in the _Methods_ section.
+We will perform the analysis on the data set [Most-Recent-Cohort-All-Data-Elements](https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv). In each analysis, we will tune the parameters for each respective model using 5-fold cross validation and then evaluate the best model by using the highest classification precision on the test set. A more detailed explanation can be found in _Methods_ section. 
 
 ---
