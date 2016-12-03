@@ -39,11 +39,12 @@ best.gbm <- fits[[which.min(avg.error)]]
   
 # Calculate validation error using mean absolute error
 pred <- predict(best.gbm, x[-train.indices, ])
-gbm.abse <- mean(abs(pred - x[-train.indices, 'CDR']))
-rel.gbm.abse <- gbm.abse / mean(x[-train.indices, 'CDR']) * 100
+label <- x[-train.indices, 'CDR']
+gbm.abse <- mean(abs(pred - label))
+rel.gbm.abse <- gbm.abse / mean(label) * 100
 
 # Save results (data and visuals)
-save(best.gbm, gbm.abse, rel.gbm.abse, file = "../data/fitted-gbm.Rdata")
+save(best.gbm, gbm.abse, rel.gbm.abse, pred, label, file = "../data/fitted-gbm.Rdata")
 
 og <- par()
 par(mar = c(6, 10, 2, 2), cex.axis = 0.75)
@@ -53,6 +54,6 @@ dev.off()
 par <- og
 
 png(file = "../images/gbm-predictions.png")
-plot(pred, x[-train.indices, "CDR"],
+plot(pred, label,
      ylab = "observed", xlab = "predicted") + abline(a = 0, b = 1, col = "blue") 
 dev.off()
