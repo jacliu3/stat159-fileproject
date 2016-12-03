@@ -11,12 +11,8 @@ comb.data <- cbind(label, model.variables)
 comb.data[,1] <- ifelse(comb.data[,1] > 0.15, 1, 0)
 
 #useful statistics of the accuracy
-stats = function(response, y){
-  precision <- posPredValue(response, y)
-  recall <- sensitivity(response, y)
-  F1 <- (2 * precision * recall) / (precision + recall)
-  cat("Precision:", precision, "Recall:", recall, "F1:",F1, "\n")
-}
+stats.df <- as.data.frame(matrix(0,nrow=5,ncol=3))
+names(stats.df) <- c("Precision","Recall","F1")
 
 #5-Fold Cross Validation
 folds = sample(5, nrow(comb.data), replace = T)
@@ -27,11 +23,14 @@ value = NULL
 for (k in 1:5){
   train = subset(1:nrow(comb.data), folds != k)
   test = subset(1:nrow(comb.data), folds == k)
-  fit = glm(CDR3 ~ . , data=comb.data[train,])
+  fit = glm(label ~ . , data=comb.data[train,])
   response = predict(fit, comb.data[test,-1], type="response")
   response = as.factor(ifelse(response > 0.5, 1, 0))
   y = as.factor(comb.data[test,1])
-  stats(response, y)
+  precision <- posPredValue(response, y)
+  recall <- sensitivity(response, y)
+  F1 <- (2 * precision * recall) / (precision + recall)
+  stats.df[k,] <- c(precision, recall,F1)
 }
 
-
+write.csv(stats.df, file = "../data/logistic-result.csv", row.names = TRUE)
