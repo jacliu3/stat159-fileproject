@@ -1,7 +1,6 @@
 \section{Analysis}
 \subsection{Logistic Regression}
 
-Since Logistic Regression is a classification method, we'll have to transform our labels, $\textit{CDR3}$, into binary labels. Based on other papers, we set our threshold at 0.15, which default rates above that considered 'high' risk and those below 'low' risk. We then performed cross-validation to gauge the accuracy of logistic regression on this particular problem. We calculated three statistics for each iteration of cross validation: precision, recall, and F1-score (see \textbf{Results} for more information on these values).
 
 \subsection{Gradient Boosting Machines}
 

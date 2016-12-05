@@ -1,56 +1,59 @@
-\section{Methods}
+\SweaveOpts{concordance=TRUE}
+\graphicspath{ {../images/} }
+\section{Methods and Analysis}
+NOTE: our methods drew from a similar study conducted at Stanford University. The paper can be found in the \textbf{References} section.
+
 \subsection{Preprocessing}
-\textit{Handling missing values}
+\textbf{Handling missing values}
 
-There are three types of missing data in the dataset: NA, NULL and PrivacySuppressed. These values account for measurable percentage of the dataset, so it is not appropriate to simply remove them. A proportion of NULL values are meaningful as they indicate the absence of binary variables, or numerical zero. In order to use these data, we replace NULL values (except those in CDR3 column) by zero. Meanwhile we replace PrivacySuppressed value by NA, and later we will impute these values.
 
-We remove the variables that contains over 30 percent of NAs, and then remove entries that contains 30 percent of NAs. That leaves about ( ) observations. Then we want to impute the rest of NA values through k nearest neighbors (KNN) with R package 'VIM'. Therefore, we prepare a full dataset for modeling. 
+There are three types of missing data in the dataset: NA, NULL and PrivacySuppressed. These values account for measurable percentage of the dataset, so it is not appropriate to simply remove all samples associated with them. A proportion of NULL values are meaningful as they indicate the absence of binary variables, or numerical zero. In order to use these data, we replace NULL values by zero. Meanwhile we replace PrivacySuppressed value by NA, and later we will impute these values.
 
-\textit{Select the predicting variable}
+We remove the features that contains over 30 percent of NAs entries, and then remove samples that contains 30 percent of NAs values. That leaves about 5.5k observations. Then we imputed the remaining NA values through the k nearest neighbors (KNN) method using the R package `VIM`. We were then in possesssion of a full dataset for modeling.\\
 
-One objective of our model is to identify the key indicator of borrowing risk. In repayment section, we observe that there are several important predictors: one- and three-year Cohort Default Rate (CDR), and 1,3,5,7-year Repayment Rate (RPY_YR_RT). There are also data on repayment rate split on different categories e.g. degree completor v.s non-completor, income low v.s medium v.s high, etc. 
+\noindent
+\textbf{Selecting the response variable}
 
-We first look at Repayment Rate in different categories of students. Below is the boxplot of one-year repayment rate with regard to categories. It shows the facts that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
+One objective of our model is to identify the key indicator of borrowing risk. In repayment section, we observe that there are several important predictors: one- and three-year Cohort Default Rate (CDR), and 1,3,5,7-year Repayment Rate (RPY\_YR\_RT). There are also data on repayment rate split on different categories e.g. degree completor v.s non-completor, income low v.s medium v.s high, etc.
 
-<<results=tex>>==
-library(png)
-library(grid)
-img <- readPNG("../../images/one-year-repayment-by-categories.png")
-grid.raster(img)
+We first look at Repayment Rate in different categories of students. Figure 1 is the boxplot of one-year repayment rate with regard to categories. It shows that whether students complete degree, students' family income level and whether students receive pell grants will affect the repayment rate significantly. The result is also shown by running two sample t-test on these categories.
+
+\begin{figure}[h]
+\caption{One-year repayment rate by category}
+\includegraphics{one-year-repayment-by-categories.png}
+\end{figure}
+
+
+There is also high correlations between default rate and repayment rate. Table 1 is the correlation matrix among 1,3 year CDR and 1,3,5,7 year RPY\_RT while Figure 2 is a visualization of it.
+<<results=tex, echo=FALSE>>==
+corr.df <- read.table("../data/CDR_repayment_correlation.txt")
+corr.df <- round(corr.df, digits = 2)
+xtable(corr.df, caption = "Correlations between Loan Rates")
 @
 
-There is also high correlations between default rate and repayment rate. The following is the correlation matrix among 1,3 year CDR and 1,3,5,7 year RPY_RT
+\begin{figure}[h]
+\caption{Correlation Matrix for Loan Rates}
+\includegraphics{CDR_repayment_correlation.png}
+\end{figure}
 
-<<results=tex>>==
-cat(readLines('../../data/CDR_repayment_correlation.txt'), sep = '\n')
-@
 
-And the correlation plot: 
+Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly, it captures the debt conditon of students in a certain college because students who default on loan is either buried in debt or unable to make enough earnings after graduate (see links in \textbf{References} for more details). Secondly, it is highly correlated with repayment variables, which measure borrowers ability's pay back the loan. This high correlations suggests that we only need to focus on one of them. Based on this analysis and our readings, we believe CDR3 is an important risk factor that credit instituion needs to consider before they borrow.\\
 
-<<results=tex>>==
-img <- readPNG("../../images/CDR_repayment_correlation.png")
-grid.raster(img)
-@
+\noindent
+\textbf{Selecting the predictors}
 
-Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly, it captures the debt conditon of students in a certain college because students who default on loan is either buried in debt or unable to make enough earnings after graduate. Secondly, it is highly correlated with repayment variables, which measure borrowers ability's pay back the loan. We only need to focus on one of them. We believe CDR3 is an important risk factor that credit instituion needs to consider before they borrow. 
+After removing unrelavant features, we narrow our focus down to the Earning section and Financial Aid Section. We observe the correlation plots for each feature group in Figures 3 and 4.
+\begin{figure}[h]
+\caption{Correlation Matrix for Loan Rates}
+\includegraphics[width=5in, height=5in]{earning_correlation.png}
+\end{figure}
 
-\textit{Select predictors}
+\begin{figure}[h]
+\caption{Correlation Matrix for Loan Rates}
+\includegraphics[width=5in, height=5in]{financial_correlation.png}
+\end{figures}
 
-After removing unrelavant features, we narrow our focus down to the Earning section and Financial Aid Section. We observe the correlation plot. For earning section:
-
-<<results=tex>>==
-img <- readPNG("../../images/earning_correlation.png")
-grid.raster(img)
-@
-
-For financial aid section:
-
-<<results=tex>>==
-img <- readPNG("../../images/financial_correlation.png")
-grid.raster(img)
-@
-
-Based on the correlation plot, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset that is of size (), with predictors being: .. and predicting variable being CDR3.
+Based on the correlation plots, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset of 11 columns, with the features being: .. and response variable being CDR3.
 
 \subsection{Logistic Regression}
 \textit{Logistic regression} is one of the most commonly used tools for applied statistics
@@ -58,26 +61,33 @@ and discrete data analysis. In this model, we have a binary output variable Y, a
 \begin{equation}
 Pr\left(Y=1\,\middle|\,X = x\right)
 \end{equation}
-as a function of $ \textit{x} $; any unknown parameters in the function are to be estimated by maximum likelihood.\par
+as a function of $ \textit{x} $; any unknown parameters in the function are to be estimated by maximum likelihood.
+
 Formally, the model logistic regression model is that
 \begin{equation}
 log \frac{p(x)}{1-p(x)} = \beta_0 + x \cdot \beta
 \end{equation}
+
 
 Solving for p(x), this gives 
 \begin{equation}
 p(x) = \frac{e^{\beta_0+x\cdot\beta}}{1 + e^{\beta_0+x\cdot\beta}}
 \end{equation}
 
+
 To minimize the mis-classification rate, we should predict Y = 1 when p > 0.5
 and Y = 0 when p < 0.5. This means guessing 1 whenever $ \beta_0+x\cdot\beta $ is non-negative,
 and 0 otherwise. Therefore, the decision boundary separating the two predicted classes is the solution of $ \beta_0+x\cdot\beta = 0 $.
 
+Since Logistic Regression is a classification method, we'll have to transform our label, $\textit{CDR3}$, into binary labels. Based on the papers we read, we set our threshold at 0.15, which default rates above that considered 'high' risk and those below 'low' risk. We then performed 5-fold cross-validation to gauge the accuracy of logistic regression on this particular problem. The logistic regression itself was achived through the R package 'glm'. We calculated three statistics for each iteration of cross validation: precision, recall, and F1-score (see \textbf{Results} for more information on these values).\\
 
 \subsection{Gradient Boosting Machines}
-We also approached the problem from a regression point of view. The idea behind \textit{gradient boosting} is to combine weak learners in an iterative fashion in order to create a stronger model. We used decision trees as our base model, as they are the most popular for this method of learning. Our goal is to find a model \textbf{M} that predicts the label (in this case, our default rate)
+We also approached the problem from a regression point of view. The idea behind \textit{gradient boosting} is to combine weak learners in an iterative fashion in order to create a stronger model. Our goal is to find a model $M$ that creates predictions $M(x) = \hat{y}$ for the label (in this case, the three-year default rate) in a way that minimizes the mean-squared error $ \sum{(y - \hat{y})^2} $. We can construct this model by building several smaller models where at each stage $i$ from $i = 0, ..., n$, we find the new model by adding an estimator $e$ to the previous model 
+$$M_{i + 1}(x) = M_{i}(x) + e(x) \approx y$$
+$$ e(x) = y - M_i(x)$$
+This equation then implies that our estimator can be found by modeling the residuals of the previous model. 
 
-
+We used decision trees as our base model, as they are the most popular for this method of learning. This means that ultimately our model is a series of trees that, by modeling the data in this way, is performing gradient descent and is capable of solving multiple regression problems. We used the R package `gbm` for our gradient-boosted decision trees and performed 5-fold cross validation to determine our tuning parameters (the number of trees used in our model, the learning rate for each estimator, and the bagging fraction -- the percent of our data used to train each tree). 
 
 
 

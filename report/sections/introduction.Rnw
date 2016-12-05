@@ -1,0 +1,10 @@
+\section{Introduction}
+
+We hope to create data models that can make predictions regarding the loan cohort default rate (CDR) based on factors that represents students' earnings and financial aid. In order to better-informed lending decisions, we classify all institutions into high-risk (CDR3 > 0.15)and low-risk (CDR < 0.15) two categories. Our model will tell which category an institution will fall in given some specific metrics. There are two types of model we use to fit the data: 
+
+\begin{itemize}
+  \item Logistic Regression
+  \item Gradient Boosting Machine
+\end{itemize}
+
+We will perform the analysis on the data set \href{https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv}{Most-Recent-Cohort-All-Data-Elements}. In each analysis, we will tune the parameters for each respective model using 5-fold cross validation and then evaluate the best model by using the highest classification precision on the test set. A more detailed explanation can be found in \textit{Methods} section. 

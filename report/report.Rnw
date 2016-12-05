@@ -1,4 +1,6 @@
 \documentclass{article}
+\usepackage{hyperref}
+\usepackage{float}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 <<echo=FALSE, include=FALSE>>=
