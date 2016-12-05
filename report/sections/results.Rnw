@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 \section{Results}
 \subsection{Logistic Regression}
 
@@ -6,3 +7,13 @@ stats.df = read.csv("../data/logistic-result.csv")
 xtable(stats.df, caption = "Logistic Regression Statistics of 5-Fold Cross Validation")
 @
 Precision is the percentage of the positive predictions were correct. Recall is the percentage of positive cases that were correctly classified. Lastly, F1-score considers both precision and recall. The 5-fold cross validation results are displayed in the below table, and on average of the 5-fold, the F1-score is around 76 percent, which is not bad.
+=======
+\section{Results}
+\subsection{Logistic Regression}
+
+<<results=tex>>==
+stats.df = read.csv("../data/logistic-result.csv")
+xtable(stats.df, caption = "Logistic Regression Statistics of 5-Fold Cross Validation")
+@
+Precision is the percentage of the positive predictions were correct. Recall is the percentage of positive cases that were correctly classified. Lastly, F1-score considers both precision and recall. The 5-fold cross validation results are displayed in the below table, and on average of the 5-fold, the F1-score is around 75 percent, which is not bad.
+>>>>>>> 6f92c175eedb190e39958a0a2b28a9c779b0ccf7
