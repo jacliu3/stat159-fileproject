@@ -21,8 +21,6 @@ earnings <- c("COUNT_NWNE_P10","COUNT_WNE_P10","MN_EARN_WNE_P10","MD_EARN_WNE_P1
     "MN_EARN_WNE_P8","MD_EARN_WNE_P8","PCT10_EARN_WNE_P8","PCT25_EARN_WNE_P8",
     "PCT75_EARN_WNE_P8","PCT90_EARN_WNE_P8","SD_EARN_WNE_P8","GT_25K_P8",
     "COUNT_NWNE_P9","COUNT_WNE_P9","MN_EARN_WNE_P9","SD_EARN_WNE_P9","GT_25K_P9")
-# will want to take ratio of 1868 and 1869 (count not working and working)
-# 1877 through 1884 (77-79, 80-82, 83-84) are also hard counts
 
 repayment <- c("CDR2", "CDR3","CDR2_DENOM", "CDR3_DENOM", "RPY_1YR_RT",
                "COMPL_RPY_1YR_RT","NONCOM_RPY_1YR_RT","LO_INC_RPY_1YR_RT",
