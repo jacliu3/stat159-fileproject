@@ -1,0 +1,36 @@
+\section{Methods}
+\subsection{Logistic Regression}
+
+\textit{Logistic regression} is one of the most commonly used tools for applied statistics
+and discrete data analysis. In this model, we have a binary output variable Y, and we want to model the conditional probability  
+\begin{equation}
+Pr\left(Y=1\,\middle|\,X = x\right)
+\end{equation}
+as a function of $ \textit{x} $; any unknown parameters in the function are to be estimated by maximum likelihood.\par
+Formally, the model logistic regression model is that
+\begin{equation}
+log \frac{p(x)}{1-p(x)} = \beta_0 + x \cdot \beta
+\end{equation}
+
+Solving for p(x), this gives 
+\begin{equation}
+p(x) = \frac{e^{\beta_0+x\cdot\beta}}{1 + e^{\beta_0+x\cdot\beta}}
+\end{equation}
+
+To minimize the mis-classification rate, we should predict Y = 1 when p > 0.5
+and Y = 0 when p < 0.5. This means guessing 1 whenever $ \beta_0+x\cdot\beta $ is non-negative,
+and 0 otherwise. Therefore, the decision boundary separating the two predicted classes is the solution of $ \beta_0+x\cdot\beta = 0 $.
+
+
+\subsection{Gradient Boosting Machines}
+We also approached the problem from a regression point of view. The idea behind \textit{gradient boosting} is to combine weak learners in an iterative fashion in order to create a stronger model. We used decision trees as our base model, as they are the most popular for this method of learning. Our goal is to find a model \textbf{M} that predicts the label (in this case, our default rate)
+
+
+
+
+
+
+
+
+
+
