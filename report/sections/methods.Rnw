@@ -53,7 +53,7 @@ After removing unrelavant features, we narrow our focus down to the Earning sect
 \includegraphics[width=5in, height=5in]{financial_correlation.png}
 \end{figures}
 
-Based on the correlation plots, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset of 11 columns, with the features being: .. and response variable being CDR3.
+Based on the correlation plots, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset of 11 columns, with the features being COUNT\_NWNE\_P10, MN\_EARN\_WNE\_P10, COUNT\_WNE\_INDEP0\_P10, COUNT\_WNE\_INDEP0\_INC1\_P10, D150\_4\_POOLED, PCTFLOAN, DEBT\_MDN, DEBT\_N, DEP\_DEBT\_N, LOAN\_EVER and response variable being CDR3.
 
 \subsection{Logistic Regression}
 \textit{Logistic regression} is one of the most commonly used tools for applied statistics
@@ -79,7 +79,7 @@ To minimize the mis-classification rate, we should predict Y = 1 when p > 0.5
 and Y = 0 when p < 0.5. This means guessing 1 whenever $ \beta_0+x\cdot\beta $ is non-negative,
 and 0 otherwise. Therefore, the decision boundary separating the two predicted classes is the solution of $ \beta_0+x\cdot\beta = 0 $.
 
-Since Logistic Regression is a classification method, we'll have to transform our label, $\textit{CDR3}$, into binary labels. Based on the papers we read, we set our threshold at 0.15, which default rates above that considered 'high' risk and those below 'low' risk. We then performed 5-fold cross-validation to gauge the accuracy of logistic regression on this particular problem. The logistic regression itself was achived through the R package 'glm'. We calculated three statistics for each iteration of cross validation: precision, recall, and F1-score (see \textbf{Results} for more information on these values).\\
+Since Logistic Regression is a classification method, we'll have to transform our label, $\textit{CDR3}$, into binary labels. Based on the papers we read, we set our threshold at 0.15, which default rates above that considered 'high' risk and those below 'low' risk. We then performed 5-fold cross-validation to gauge the accuracy of logistic regression on this particular problem. The logistic regression itself was achived through the R package 'glm'. Using the R package 'caret', we calculated three statistics for each iteration of cross validation: precision, recall, and F1-score (see \textbf{Results} for more information on these values).\\
 
 \subsection{Gradient Boosting Machines}
 We also approached the problem from a regression point of view. The idea behind \textit{gradient boosting} is to combine weak learners in an iterative fashion in order to create a stronger model. Our goal is to find a model $M$ that creates predictions $M(x) = \hat{y}$ for the label (in this case, the three-year default rate) in a way that minimizes the mean-squared error $ \sum{(y - \hat{y})^2} $. We can construct this model by building several smaller models where at each stage $i$ from $i = 0, ..., n$, we find the new model by adding an estimator $e$ to the previous model 
@@ -88,11 +88,4 @@ $$ e(x) = y - M_i(x)$$
 This equation then implies that our estimator can be found by modeling the residuals of the previous model. 
 
 We used decision trees as our base model, as they are the most popular for this method of learning. This means that ultimately our model is a series of trees that, by modeling the data in this way, is performing gradient descent and is capable of solving multiple regression problems. We used the R package `gbm` for our gradient-boosted decision trees and performed 5-fold cross validation to determine our tuning parameters (the number of trees used in our model, the learning rate for each estimator, and the bagging fraction -- the percent of our data used to train each tree). 
-
-
-
-
-
-
-
 

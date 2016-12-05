@@ -1,8 +1,15 @@
-\Section{References}
+\newpage
+\section{References}
 
+\begin{itemize}
+
+\item
 Cohort Default Rate Effects\\
 \url{https://ifap.ed.gov/DefaultManagement/guide/attachments/CDRGuideCh2Pt4CDREffects.pdf}\\
 
+\item
 The Smart Student Guide to Financial Aid\\
 \url{http://www.finaid.org/loans/cohortdefaultrates.phtml}\\
+
+\end{itemize}
 

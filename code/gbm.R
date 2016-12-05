@@ -10,27 +10,27 @@ x <- cbind(imp.data, CDR = as.numeric(repayment.data))
 # Fit model
 train.indices <- sample(nrow(x), as.integer(nrow(x)*4/5))
 fit1 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian",
-            cv.folds = 3, n.trees = 100)
+            cv.folds = 5, n.trees = 100)
 fit2 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.01)
+            cv.folds = 5, shrinkage = 0.01)
 fit3 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.001)
+            cv.folds = 5, shrinkage = 0.001)
 fit4 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1)
+            cv.folds = 5, shrinkage = 0.1)
 fit5 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, bag.fraction = 0.4)
+            cv.folds = 5, shrinkage = 0.1, bag.fraction = 0.4)
 fit6 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, bag.fraction = 0.6)
+            cv.folds = 5, shrinkage = 0.1, bag.fraction = 0.6)
 fit7 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, n.trees = 150)
+            cv.folds = 5, shrinkage = 0.1, n.trees = 150)
 fit8 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, n.trees = 75)
+            cv.folds = 5, shrinkage = 0.1, n.trees = 75)
 fit9 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, n.trees = 300)
+            cv.folds = 5, shrinkage = 0.1, n.trees = 300)
 fit10 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-            cv.folds = 3, shrinkage = 0.1, n.trees = 500)
+            cv.folds = 5, shrinkage = 0.1, n.trees = 500)
 fit11 <- gbm(CDR~., data = x[train.indices, ], distribution = "gaussian", 
-             cv.folds = 3, shrinkage = 0.1, n.trees = 1000)
+             cv.folds = 5, shrinkage = 0.1, n.trees = 1000)
 fits <- list(fit1, fit2, fit3, fit4, fit5, fit6, fit7, fit8, fit9, fit10, fit11)
 
 # Select best model

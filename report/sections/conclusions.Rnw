@@ -1,0 +1,13 @@
+\section{Conclusion}
+
+To compare our two models, we have to use a common metric. To do so, we can easily convert the regression algoirthm into a classification one by looking at the predicted default rate and binarizing it (1 if greater than 0.15, 0 else). Table 4 gives us the statistical metrics of using the gbm as a classification method.
+<<results=tex, echo=FALSE>>==
+cl <- as.factor(label > 0.15)
+cp <- as.factor(pred > 0.15)
+precision <- posPredValue(cp, cl)
+recall <- sensitivity(cp, cl)
+F1 <- (2 * precision * recall) / (precision + recall)
+gbm.table <- data.frame(precision=precision, recall=recall, F1=F1)
+xtable(gbm.table, "GBM Classification Statistics")
+@
+Given the large number of samples in our dataset, the gradient boosting machine significantly outperforms logistic regression. Additionaly, it provides more information because it gives a predicted value for the three-year default rate, rather than a simple indicator of relative size. From Figure 6 we can see our model follows the ideal slope carefully. However, it does show some heteroskedasticity; given more time we could try to transform our input data (standardization, centering, log-transformation) or fit other models to create more consistent predictions.

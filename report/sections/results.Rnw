@@ -1,19 +1,31 @@
-<<<<<<< HEAD
 \section{Results}
 \subsection{Logistic Regression}
 
-<<results=tex>>==
+<<results=tex, echo=FALSE>>==
 stats.df = read.csv("../data/logistic-result.csv")
 xtable(stats.df, caption = "Logistic Regression Statistics of 5-Fold Cross Validation")
 @
-Precision is the percentage of the positive predictions were correct. Recall is the percentage of positive cases that were correctly classified. Lastly, F1-score considers both precision and recall. The 5-fold cross validation results are displayed in the below table, and on average of the 5-fold, the F1-score is around 76 percent, which is not bad.
-=======
-\section{Results}
-\subsection{Logistic Regression}
 
-<<results=tex>>==
-stats.df = read.csv("../data/logistic-result.csv")
-xtable(stats.df, caption = "Logistic Regression Statistics of 5-Fold Cross Validation")
+Precision is the percentage of the positive predictions were correct, aka the percentage of positive predictions that were truely positive. Recall is the percentage of positive cases that were correctly classified as positive. Lastly, the F1-score considers both precision and recall. The 5-fold cross validation results are displayed in the below table, and on average of the 5-fold, the F1-score is around 76 percent which is fairly high. 
+
+\subsection{Gradient Boosting Machine}
+
+Table 3 shows the values of the tuning parameters chosen by 5-fold cross-validation.
+<<results=tex, echo=FALSE>>==
+load("../data/fitted-gbm.Rdata")
+gbm.frame <-data.frame(num_trees = best.gbm$n.trees, learning_rate = best.gbm$shrinkage, 
+                       bagging_fraction = best.gbm$bag.fraction)
+xtable(gbm.frame, caption = "Parameters for GBM")
 @
-Precision is the percentage of the positive predictions were correct. Recall is the percentage of positive cases that were correctly classified. Lastly, F1-score considers both precision and recall. The 5-fold cross validation results are displayed in the below table, and on average of the 5-fold, the F1-score is around 75 percent, which is not bad.
->>>>>>> 6f92c175eedb190e39958a0a2b28a9c779b0ccf7
+
+This model had a mean absolute eroor of \Sexpr{round(gbm.abse, digits = 5)}; we evaluated models by this metric instead of the more common mean squared error to make the model more resistant to outliers. Given the high number of trees and the nature of gradient boosting, overfitting is a common error that we wanted to avoid. Our gbm then indentified the most important features, as see in Figure 5.
+\begin{figure}[h]
+\caption{Features by Importance for GBM}
+\includegraphics{gbm-features.png}
+\end{figure}
+
+In Figure 6 we can see the plot of the true values against our predicted values, where the blue line represents the perfect model. 
+\begin{figure}[h]
+\caption{Features by Importance for GBM}
+\includegraphics{gbm-predictions.png}
+\end{figure}
