@@ -1,18 +1,19 @@
 ---
 output: pdf_document
 ---
-##https://ifap.ed.gov/DefaultManagement/guide/attachments/CDRGuideCh2Pt4CDREffects.pdf
-##http://www.finaid.org/loans/cohortdefaultrates.phtml
 
 ##Data
 
-The primary data set we are using is the most recent College ScoreCard (https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv), which contains approximately 2000 metrics for 7704 degree-granting institution across U.S. These metrics include demographic data, student academics, costs, student body, financial aid, completion, repayment information, etc. We choose to focus on the most recent year dataset because it contains most up-to-date information. Among all metrics we will select predictors from following three clusters:
+The primary data set we are using is the [most recent College ScoreCard] (https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-All-Data-Elements.csv), which contains approximately 2000 metrics for 7704 degree-granting institution across U.S. These metrics include demographic data, student academics, costs, student body, financial aid, completion, repayment information, etc. We choose to focus on the most recent year dataset because it contains most up-to-date information. Among all metrics we will select predictors from following three clusters:
 
-_Repayment_: shows loan performance metrics and borrowers' behavior afgter graduation 
+_Repayment_: shows loan performance metrics and borrowers' behavior after graduation 
 _Financial Aid_: Amount of debt that students can expect to borrow
 _Earnings_: data on earnings and employment of former students
 
 Our first task is to clean the dataset, select the right variable to predict, and most relevant predictors by transforming and segementing the dataset.
 
+reference:
+https://ifap.ed.gov/DefaultManagement/guide/attachments/CDRGuideCh2Pt4CDREffects.pdf
+http://www.finaid.org/loans/cohortdefaultrates.phtml
 ---
 
