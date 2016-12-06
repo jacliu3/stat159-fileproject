@@ -29,4 +29,5 @@ echo >> $info
 # Version of R
 echo "R Version" >> $info
 echo "---------" >> $info
+R --version >> $info
 cd code/; Rscript session-info-script.R
