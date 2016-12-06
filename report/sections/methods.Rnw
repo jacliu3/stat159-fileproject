@@ -26,14 +26,14 @@ We first look at Repayment Rate in different categories of students. Figure 1 is
 
 There is also high correlations between default rate and repayment rate. Table 1 is the correlation matrix among 1,3 year CDR and 1,3,5,7 year RPY\_RT while Figure 2 is a visualization of it.
 <<results=tex, echo=FALSE>>==
-corr.df <- read.table("../data/CDR_repayment_correlation.txt")
+corr.df <- read.table("../data/CDR-repayment-correlation.txt")
 corr.df <- round(corr.df, digits = 2)
 xtable(corr.df, caption = "Correlations between Loan Rates")
 @
 
 \begin{figure}[h]
 \caption{Correlation Matrix for Loan Rates}
-\includegraphics{CDR_repayment_correlation.png}
+\includegraphics{CDR-repayment-correlation.png}
 \end{figure}
 
 
@@ -45,12 +45,12 @@ Therefore, we choose 3-year CDR as the indicator variable as our model. Firstly,
 After removing unrelavant features, we narrow our focus down to the Earning section and Financial Aid Section. We observe the correlation plots for each feature group in Figures 3 and 4.
 \begin{figure}[h]
 \caption{Correlation Matrix for Loan Rates}
-\includegraphics[width=5in, height=5in]{earning_correlation.png}
+\includegraphics[width=5in, height=5in]{earning-correlation.png}
 \end{figure}
 
 \begin{figure}[h]
 \caption{Correlation Matrix for Loan Rates}
-\includegraphics[width=5in, height=5in]{financial_correlation.png}
+\includegraphics[width=5in, height=5in]{financial-correlation.png}
 \end{figures}
 
 Based on the correlation plots, we retain variables with low correlation and drop those with high correlation. Finally we get a dataset of 11 columns, with the features being COUNT\_NWNE\_P10, MN\_EARN\_WNE\_P10, COUNT\_WNE\_INDEP0\_P10, COUNT\_WNE\_INDEP0\_INC1\_P10, D150\_4\_POOLED, PCTFLOAN, DEBT\_MDN, DEBT\_N, DEP\_DEBT\_N, LOAN\_EVER and response variable being CDR3.

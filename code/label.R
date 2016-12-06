@@ -42,7 +42,7 @@ plot(cv.tree.repayment.oneyear$size, cv.tree.repayment.oneyear$dev, type = 'b')
 
 # Prune tree
 prune.repayment.oneyear = prune.tree(tree.repayment.oneyear, best = 5)
-png('../images//tree.repayment.oneyear.png')
+png('../images//tree-repayment-oneyear.png')
 plot(prune.repayment.oneyear )
 text(prune.repayment.oneyear, pretty =0)
 dev.off()
@@ -62,7 +62,7 @@ cv.tree.repayment.threeyear = cv.tree(tree.repayment.threeyear)
 plot(cv.tree.repayment.threeyear$size, cv.tree.repayment.threeyear$dev, type = 'b')
 
 prune.repayment.threeyear = prune.tree(tree.repayment.threeyear, best = 6)
-png('../images/repayment.threeyear.png')
+png('../images/repayment-threeyear.png')
 plot(prune.repayment.threeyear )
 text(prune.repayment.threeyear, pretty =0)
 dev.off()
