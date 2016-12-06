@@ -54,3 +54,104 @@ GNU General Public License versions 2 or 3.
 For more information about these matters see
 http://www.gnu.org/licenses/.
 
+Session Information
+
+R version 3.3.1 (2016-06-21)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.12.1 (Sierra)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+ [1] parallel  splines   grid      methods   stats     graphics  grDevices
+ [8] utils     datasets  base     
+
+other attached packages:
+ [1] corrplot_0.77    gbm_2.1.1        survival_2.39-4  mice_2.25       
+ [5] Rcpp_0.12.6      caret_6.0-73     lattice_0.20-33  VIM_4.6.0       
+ [9] data.table_1.9.8 colorspace_1.2-6 tree_1.0-37      MASS_7.3-45     
+[13] stringr_1.1.0    shiny_0.14.1     ggplot2_2.1.0    xtable_1.8-2    
+[17] knitr_1.14       devtools_1.12.0 
+
+loaded via a namespace (and not attached):
+ [1] zoo_1.7-13         reshape2_1.4.1     htmltools_0.3.5    stats4_3.3.1      
+ [5] mgcv_1.8-12        ModelMetrics_1.1.0 e1071_1.6-7        nloptr_1.0.4      
+ [9] withr_1.0.2        sp_1.2-3           foreach_1.4.3      plyr_1.8.4        
+[13] robustbase_0.92-6  MatrixModels_0.4-1 munsell_0.4.3      gtable_0.2.0      
+[17] codetools_0.2-14   memoise_1.0.0      laeken_0.4.6       SparseM_1.74      
+[21] httpuv_1.3.3       lmtest_0.9-34      quantreg_5.29      pbkrtest_0.4-6    
+[25] class_7.3-14       vcd_1.4-3          DEoptimR_1.0-8     scales_0.4.0      
+[29] mime_0.5           lme4_1.1-12        digest_0.6.10      stringi_1.1.1     
+[33] tools_3.3.1        magrittr_1.5       car_2.1-3          Matrix_1.2-6      
+[37] minqa_1.2.4        iterators_1.0.8    rpart_4.1-10       R6_2.2.0          
+[41] boot_1.3-18        nnet_7.3-12        nlme_3.1-128      
+ setting  value                       
+ version  R version 3.3.1 (2016-06-21)
+ system   x86_64, darwin13.4.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ tz       America/Los_Angeles         
+ date     2016-12-05                  
+
+ package      * version date       source        
+ boot           1.3-18  2016-02-23 CRAN (R 3.3.1)
+ car            2.1-3   2016-08-11 CRAN (R 3.3.0)
+ caret        * 6.0-73  2016-11-10 CRAN (R 3.3.2)
+ class          7.3-14  2015-08-30 CRAN (R 3.3.1)
+ codetools      0.2-14  2015-07-15 CRAN (R 3.3.1)
+ colorspace   * 1.2-6   2015-03-11 CRAN (R 3.3.0)
+ corrplot     * 0.77    2016-04-21 CRAN (R 3.3.0)
+ data.table   * 1.9.8   2016-11-25 CRAN (R 3.3.2)
+ DEoptimR       1.0-8   2016-11-19 CRAN (R 3.3.2)
+ devtools     * 1.12.0  2016-06-24 CRAN (R 3.3.0)
+ digest         0.6.10  2016-08-02 CRAN (R 3.3.0)
+ e1071          1.6-7   2015-08-05 CRAN (R 3.3.0)
+ foreach        1.4.3   2015-10-13 CRAN (R 3.3.0)
+ gbm          * 2.1.1   2015-03-11 CRAN (R 3.3.0)
+ ggplot2      * 2.1.0   2016-03-01 CRAN (R 3.3.0)
+ gtable         0.2.0   2016-02-26 CRAN (R 3.3.0)
+ htmltools      0.3.5   2016-03-21 CRAN (R 3.3.0)
+ httpuv         1.3.3   2015-08-04 CRAN (R 3.3.0)
+ iterators      1.0.8   2015-10-13 CRAN (R 3.3.0)
+ knitr        * 1.14    2016-08-13 CRAN (R 3.3.0)
+ laeken         0.4.6   2014-08-19 CRAN (R 3.3.0)
+ lattice      * 0.20-33 2015-07-14 CRAN (R 3.3.1)
+ lme4           1.1-12  2016-04-16 CRAN (R 3.3.0)
+ lmtest         0.9-34  2015-06-06 CRAN (R 3.3.0)
+ magrittr       1.5     2014-11-22 CRAN (R 3.3.0)
+ MASS         * 7.3-45  2016-04-21 CRAN (R 3.3.1)
+ Matrix         1.2-6   2016-05-02 CRAN (R 3.3.1)
+ MatrixModels   0.4-1   2015-08-22 CRAN (R 3.3.0)
+ memoise        1.0.0   2016-01-29 CRAN (R 3.3.0)
+ mgcv           1.8-12  2016-03-03 CRAN (R 3.3.1)
+ mice         * 2.25    2015-11-09 CRAN (R 3.3.0)
+ mime           0.5     2016-07-07 CRAN (R 3.3.0)
+ minqa          1.2.4   2014-10-09 CRAN (R 3.3.0)
+ ModelMetrics   1.1.0   2016-08-26 CRAN (R 3.3.0)
+ munsell        0.4.3   2016-02-13 CRAN (R 3.3.0)
+ nlme           3.1-128 2016-05-10 CRAN (R 3.3.1)
+ nloptr         1.0.4   2014-08-04 CRAN (R 3.3.0)
+ nnet           7.3-12  2016-02-02 CRAN (R 3.3.1)
+ pbkrtest       0.4-6   2016-01-27 CRAN (R 3.3.0)
+ plyr           1.8.4   2016-06-08 CRAN (R 3.3.0)
+ quantreg       5.29    2016-09-04 CRAN (R 3.3.0)
+ R6             2.2.0   2016-10-05 CRAN (R 3.3.0)
+ Rcpp         * 0.12.6  2016-07-19 CRAN (R 3.3.0)
+ reshape2       1.4.1   2014-12-06 CRAN (R 3.3.0)
+ robustbase     0.92-6  2016-05-31 CRAN (R 3.3.0)
+ rpart          4.1-10  2015-06-29 CRAN (R 3.3.1)
+ scales         0.4.0   2016-02-26 CRAN (R 3.3.0)
+ shiny        * 0.14.1  2016-10-05 CRAN (R 3.3.0)
+ sp             1.2-3   2016-04-14 CRAN (R 3.3.0)
+ SparseM        1.74    2016-11-10 CRAN (R 3.3.2)
+ stringi        1.1.1   2016-05-27 CRAN (R 3.3.0)
+ stringr      * 1.1.0   2016-08-19 CRAN (R 3.3.0)
+ survival     * 2.39-4  2016-05-11 CRAN (R 3.3.1)
+ tree         * 1.0-37  2016-01-21 CRAN (R 3.3.0)
+ vcd            1.4-3   2016-09-17 CRAN (R 3.3.0)
+ VIM          * 4.6.0   2016-10-17 CRAN (R 3.3.0)
+ withr          1.0.2   2016-06-20 CRAN (R 3.3.0)
+ xtable       * 1.8-2   2016-02-05 CRAN (R 3.3.0)
+ zoo            1.7-13  2016-05-03 CRAN (R 3.3.0)
