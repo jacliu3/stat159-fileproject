@@ -31,7 +31,7 @@ report: models report/report.Rnw report/sections/*.Rnw
 slides: slides/slides.Rmd
 	Rscript -e "library(rmarkdown); render('slides/slides.Rmd')"
 
-clean:
+clean:	
 	rm -f report/report.pdf
 	rm -f report/report.html
 
